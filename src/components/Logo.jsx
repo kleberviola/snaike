@@ -37,6 +37,7 @@ export function Logo({ isHero }) {
     <motion.a
       href="#section-0"
       aria-label="Snaike — voltar ao início"
+      initial={shouldBeHero ? heroVariant : navVariant}
       animate={shouldBeHero ? heroVariant : navVariant}
       transition={transition}
       style={{

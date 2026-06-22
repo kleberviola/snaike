@@ -1,20 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: 'easeOut' },
-})
-
-const fadeRight = {
-  initial: { opacity: 0, x: 40 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
-}
-
 export function Hero() {
   const prefersReducedMotion = useReducedMotion()
-  const noAnim = prefersReducedMotion
 
   return (
     <div style={{
@@ -27,17 +14,17 @@ export function Hero() {
       padding: '0 5vw',
       overflow: 'hidden',
     }}>
-      {/* Espaço reservado para o logo fixo hero + subtítulo */}
       <div style={{ flex: '0 0 auto' }}>
-        {/* O Logo animado vive em App.jsx como fixed.
-            Este div reserva espaço para que o conteúdo não sobreponha o logo. */}
         <div style={{
           height: 'clamp(8rem, 14vw, 16rem)',
           width: 'clamp(18rem, 40vw, 50rem)',
         }} />
 
         <motion.p
-          {...(noAnim ? {} : fadeUp(0.4))}
+          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           style={{
             fontFamily: 'var(--font-body)',
             fontWeight: 200,
@@ -53,9 +40,11 @@ export function Hero() {
         </motion.p>
       </div>
 
-      {/* Imagem da cobra */}
       <motion.div
-        {...(noAnim ? {} : fadeRight)}
+        initial={prefersReducedMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
         style={{
           flex: '0 0 45%',
           height: '80vh',

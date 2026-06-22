@@ -11,13 +11,13 @@ const pulseAnimation = {
 
 export function ContactButton({ pulse = false }) {
   const prefersReducedMotion = useReducedMotion()
-  const email = import.meta.env.VITE_CONTACT_EMAIL
+  const email = import.meta.env.VITE_CONTACT_EMAIL || ''
 
   return (
     <motion.a
-      href={`mailto:${email}`}
+      href={email ? `mailto:${email}` : '#'}
       aria-label="Entrar em contato"
-      animate={pulse && !prefersReducedMotion ? pulseAnimation : {}}
+      animate={pulse && !prefersReducedMotion ? pulseAnimation : { scale: 1 }}
       style={{
         position: 'fixed',
         bottom: '2rem',

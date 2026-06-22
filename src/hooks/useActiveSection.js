@@ -4,6 +4,7 @@ export function useActiveSection() {
   const [activeSection, setActiveSection] = useState(0)
 
   useEffect(() => {
+    const container = document.querySelector('.scroll-container')
     const sections = document.querySelectorAll('.section')
     if (sections.length === 0) return
 
@@ -16,7 +17,10 @@ export function useActiveSection() {
           }
         })
       },
-      { threshold: 0.6 }
+      {
+        root: container || null,
+        threshold: 0.4,
+      }
     )
 
     sections.forEach((section) => observer.observe(section))

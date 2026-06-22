@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react'
-import Lenis from 'lenis'
+import { useRef } from 'react'
 import { useActiveSection } from './hooks/useActiveSection'
 import { Logo } from './components/Logo'
 import { ContactButton } from './components/ContactButton'
@@ -9,28 +8,13 @@ import { Manifesto } from './sections/Manifesto'
 import { AIStudio } from './sections/AIStudio'
 import { Atacar } from './sections/Atacar'
 
+const SECTION_COUNT = 5
+
 export default function App() {
   const containerRef = useRef(null)
   const activeSection = useActiveSection()
   const isHero = activeSection === 0
-  const isLastSection = activeSection === 4
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      wrapper: containerRef.current,
-      content: containerRef.current,
-      smoothWheel: true,
-      duration: 1.2,
-    })
-
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
-    return () => lenis.destroy()
-  }, [])
+  const isLastSection = activeSection === SECTION_COUNT - 1
 
   return (
     <>
