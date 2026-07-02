@@ -1,0 +1,656 @@
+/* =============================================
+   FONTS
+   ============================================= */
+@font-face {
+  font-family: 'Franie';
+  src: url('../Fonts/Franie/WOFF2/Franie-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franie';
+  src: url('../Fonts/Franie/WOFF2/Franie-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franie';
+  src: url('../Fonts/Franie/WOFF2/Franie-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franie';
+  src: url('../Fonts/Franie/WOFF2/Franie-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('../Fonts/PP Mori /PPMori-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('../Fonts/PP Mori /PPMori-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('../Fonts/PP Mori /PPMori-Extralight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================
+   TOKENS
+   ============================================= */
+:root {
+  --color-red:    #FF1F00;
+  --color-yellow: #FFFF00;
+  --color-blue:   #0A0E5A;
+  --color-dark:   #0D0D0D;
+  --color-white:  #FFFFFF;
+
+  --font-display: 'Franie', serif;
+  --font-body:    'PP Mori', sans-serif;
+}
+
+/* =============================================
+   RESET
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* =============================================
+   NAV
+   ============================================= */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 48px;
+  pointer-events: none;
+}
+
+.nav-logo,
+.nav-cta {
+  pointer-events: auto;
+}
+
+.nav-logo img {
+  height: 28px;
+  width: auto;
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-mais {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.nav-cta:hover .nav-mais {
+  opacity: 0.7;
+}
+
+/* =============================================
+   OVERLAY DE CONTATO
+   ============================================= */
+.contact-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--color-red);
+  display: flex;
+  align-items: flex-end;
+  padding: 28px 48px;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.contact-overlay.is-open {
+  pointer-events: auto;
+}
+
+.overlay-close {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  width: 34px;
+  height: 34px;
+}
+
+.overlay-close img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.overlay-close:hover img {
+  opacity: 0.7;
+}
+
+.overlay-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay-link {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6.67vw, 6rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: #0024AC;
+}
+
+/* =============================================
+   FULLPAGE — scroll controlado por JS + GSAP
+   ============================================= */
+.fullpage {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-dark);
+}
+
+/* =============================================
+   SECTION BASE
+   ============================================= */
+.section {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.section.is-active {
+  pointer-events: auto;
+}
+
+/* Background (imagem ou vídeo) cobre 100% */
+.section-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Ken Burns: scale reduz de 1.06 → 1.0 quando a seção fica ativa */
+.section-bg img,
+.section-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.06);
+  transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.section.is-active .section-bg img,
+.section.is-active .section-bg video {
+  transform: scale(1);
+}
+
+/* Conteúdo sobre o fundo */
+.section-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Rodapé fixo dentro de cada seção */
+.section-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 48px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--color-red);
+}
+
+/* =============================================
+   DOTS NAVIGATION
+   ============================================= */
+.section-dots {
+  display: none;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 31, 0, 0.35);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.dot.active {
+  background: var(--color-red);
+  transform: scale(1.4);
+}
+
+/* =============================================
+   SECTION 02 · SOBRE (vídeo com play/pause)
+   ============================================= */
+.reel-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: clamp(56px, 8vw, 96px);
+  height: clamp(56px, 8vw, 96px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.reel-play img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.reel-play:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.reel-play.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =============================================
+   SECTION 01 · HERO
+   ============================================= */
+
+/* Esconde o logo da nav na hero — o wordmark gigante o substitui */
+.nav-logo {
+  transition: opacity 0.4s;
+}
+body.is-hero .nav-logo {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Wrapper flex: mantém 12px fixos entre logo e tagline em qualquer tela */
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 97vw;
+}
+
+.hero-wordmark {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  display: block;
+}
+
+.hero-tagline {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(1rem, 2.5vw, 3rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  white-space: nowrap;
+}
+
+/* =============================================
+   SECTION 03 · MANIFESTO
+   ============================================= */
+.manifesto-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.manifesto-block {
+  position: absolute;
+  left: 1%;
+  top: 16%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.5vw, 2rem);
+}
+
+.manifesto-line {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3.5rem, 9.72vw, 12rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--color-red);
+  white-space: nowrap;
+}
+
+.manifesto-left {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.875vw, 2.5rem);
+  text-transform: uppercase;
+  color: var(--color-red);
+  line-height: 1;
+}
+
+.ml-text1 {
+  display: block;
+  padding-left: 0.5em;
+  margin-bottom: 0.35em;
+}
+
+.ml-row2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.ml-dash {
+  display: block;
+  width: 2.86vw;
+  min-width: 20px;
+  height: 3px;
+  background: var(--color-red);
+  flex-shrink: 0;
+}
+
+.bg-mobile {
+  display: none;
+}
+
+.manifesto-left-mobile {
+  display: none;
+}
+
+.manifesto-right {
+  position: absolute;
+  right: 2%;
+  bottom: 18%;
+  text-align: right;
+}
+
+.manifesto-caption {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.875vw, 2.5rem);
+  text-transform: uppercase;
+  color: var(--color-red);
+  line-height: 1.1;
+  margin-bottom: 0.7em;
+}
+
+.manifesto-list {
+  list-style: none;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.75rem, 1.25vw, 1.75rem);
+  color: var(--color-red);
+  line-height: 1.45;
+}
+
+/* =============================================
+   SECTION 04 · AI STUDIO
+   ============================================= */
+.ai-studio-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ais-intro {
+  position: absolute;
+  left: 1.6%;
+  top: 22.1%;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.875vw, 2.5rem);
+  text-transform: uppercase;
+  color: var(--color-red);
+  line-height: 1.05;
+}
+
+.ais-indent {
+  display: inline-block;
+  padding-left: 0.8em;
+}
+
+.ais-list {
+  position: absolute;
+  right: 2%;
+  top: 34.8%;
+  text-align: right;
+  list-style: none;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.75rem, 1.25vw, 1.75rem);
+  color: var(--color-red);
+  line-height: 1.45;
+}
+
+.ais-title {
+  position: absolute;
+  left: 1.7%;
+  bottom: 1.5%;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(5rem, 17.27vw, 22rem);
+  text-transform: uppercase;
+  color: var(--color-red);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* =============================================
+   SECTION 05 · CONTATO / CTA
+   ============================================= */
+.contato-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cta-block {
+  position: absolute;
+  left: 1%;
+  top: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cta-line {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3.5rem, 9.72vw, 12rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--color-red);
+  white-space: nowrap;
+}
+
+/* =============================================
+   MOBILE — margem de 24px + correção de overflow
+   ============================================= */
+@media (max-width: 640px) {
+
+  .nav {
+    padding: 24px;
+  }
+
+  .section-footer {
+    padding: 24px;
+  }
+
+  /* Hero: mais respiro nas laterais do wordmark (era 97vw, quase sem margem) */
+  .hero-stack {
+    width: 87vw;
+  }
+
+  .contact-overlay {
+    padding: 24px;
+  }
+
+  .overlay-close {
+    top: 24px;
+    right: 24px;
+  }
+
+  /* Manifesto */
+  .manifesto-block {
+    left: 24px;
+    top: 76px;
+  }
+
+  .manifesto-line {
+    font-size: 48px;
+    white-space: normal;
+  }
+
+  .manifesto-left {
+    font-size: 24px;
+  }
+
+  .manifesto-right {
+    right: 24px;
+    bottom: 40px;
+  }
+
+  .manifesto-caption {
+    font-size: 24px;
+  }
+
+  .manifesto-list {
+    font-size: 16px;
+  }
+
+  /* AI Studio */
+  .ais-intro {
+    left: 24px;
+    top: 124px;
+    font-size: 24px;
+  }
+
+
+  .ais-list {
+    right: 24px;
+    top: auto;
+    bottom: 14.6%;
+    font-size: 16px;
+  }
+
+  .ais-title {
+    left: 24px;
+    font-size: clamp(2.2rem, 15.6vw, 22rem);
+  }
+
+  /* Contato */
+  .cta-block {
+    left: 24px;
+  }
+
+  .cta-line {
+    font-size: 48px;
+    white-space: normal;
+  }
+
+  /* Manifesto: troca a imagem de fundo pela versão enquadrada para mobile */
+  .bg-desktop {
+    display: none;
+  }
+
+  .bg-mobile {
+    display: block;
+  }
+
+  /* "IA executa" recuada em relação a "Humanos criam", como no Paper.
+     Fica em uma linha só (não pode quebrar como "Humanos/criam"). */
+  .manifesto-line + .manifesto-line {
+    margin-left: 20px;
+    white-space: nowrap;
+  }
+
+  .manifesto-left-desktop {
+    display: none;
+  }
+
+  .manifesto-left-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  .ml-row1-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .ml-text2-mobile {
+    padding-left: 1.9em;
+  }
+}
