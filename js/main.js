@@ -6,7 +6,7 @@
   const mq     = window.matchMedia('(max-width: 640px)');
 
   function updateSrc() {
-    const desired = mq.matches ? 'videos/cobra_vertical.mp4' : 'videos/cobra_ok.mp4';
+    const desired = mq.matches ? 'videos/cobra_vertical.mp4' : 'videos/cobra_ok_baixa.mp4';
     if (source.getAttribute('src') !== desired) {
       source.setAttribute('src', desired);
       video.load();

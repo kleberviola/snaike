@@ -96,6 +96,19 @@ button {
   padding: 0;
 }
 
+/* Presente no DOM para SEO/acessibilidade, sem alterar o layout visual */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* =============================================
    NAV
    ============================================= */
@@ -544,6 +557,8 @@ body.is-hero .nav-logo {
   color: var(--color-yellow);
   margin-top: 0.3em;
   white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
   transition: opacity 0.2s;
 }
 
