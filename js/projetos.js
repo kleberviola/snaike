@@ -86,8 +86,11 @@
   const lightbox = document.getElementById('proj-lightbox');
   if (!lightbox || !items.length) return;
 
-  const lightboxImg   = lightbox.querySelector('img');
-  const lightboxVideo = lightbox.querySelector('video');
+  // :scope > filtra só os filhos diretos: o botão de fechar também tem um
+  // <img> dentro dele, então um seletor genérico pegaria o ícone errado.
+  const lightboxImg      = lightbox.querySelector(':scope > img');
+  const lightboxVideo    = lightbox.querySelector(':scope > video');
+  const lightboxCloseBtn = document.getElementById('proj-lightbox-close');
   let lastFocused = null;
 
   function lockScroll() {
@@ -161,6 +164,13 @@
 
   // Clicar na imagem (ou em qualquer ponto do overlay) fecha
   lightbox.addEventListener('click', closeLightbox);
+
+  // stopPropagation evita que o clique no X dispare o closeLightbox duas
+  // vezes (uma aqui, outra pelo bubbling até o listener do overlay acima)
+  lightboxCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightbox();
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();

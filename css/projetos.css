@@ -64,7 +64,7 @@ body {
   grid-template-columns: repeat(6, 1fr);
   grid-auto-rows: clamp(140px, 21vw, 400px);
   gap: var(--proj-gap);
-  padding: var(--proj-gap) var(--proj-gap) 0;
+  padding: var(--proj-gap) var(--proj-gap) 64px;
 }
 
 /* Ciclo de 5 itens: três (span 2) e depois dois (span 3).
@@ -217,6 +217,29 @@ body.has-proj-cursor .proj-item {
   pointer-events: auto;
 }
 
+/* Mesmo ícone e giro do botão de fechar do vídeo Reels (mais_icon.svg
+   rotacionado 45° vira um X) — mantém o padrão visual do site. */
+.proj-lightbox-close {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  transform: rotate(45deg);
+  transition: opacity 0.2s;
+}
+
+.proj-lightbox-close img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.proj-lightbox-close:hover {
+  opacity: 0.7;
+}
+
 /* cover: preenche a tela inteira, sem barras pretas nas laterais */
 .proj-lightbox img,
 .proj-lightbox video {
@@ -229,20 +252,6 @@ body.has-proj-cursor .proj-item {
 .proj-lightbox img[hidden],
 .proj-lightbox video[hidden] {
   display: none;
-}
-
-/* =============================================
-   RODAPÉ
-   ============================================= */
-.proj-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 24px 48px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--color-red);
 }
 
 /* =============================================
@@ -265,9 +274,11 @@ body.has-proj-cursor .proj-item {
 
   .proj-grid {
     grid-auto-rows: clamp(180px, 52vw, 320px);
+    padding-bottom: 32px;
   }
 
-  .proj-footer {
-    padding: 24px;
+  .proj-lightbox-close {
+    top: 24px;
+    right: 24px;
   }
 }
