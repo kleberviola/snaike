@@ -36,73 +36,40 @@
   mq.addEventListener('change', updateSrc);
 })();
 
-// Vídeo da seção "Reel" — poster + botão de play; toca com áudio,
-// pausa se clicar no vídeo enquanto ele roda.
-const reelVideo = document.querySelector('.reel-video');
-const reelPlayBtn = document.querySelector('.reel-play');
+// Modal de vídeo da seção "Reel" — abre em tela cheia ao clicar em
+// "Assistir Reels", fecha pelo X (ou volta a pausar o vídeo).
+const reelVideo    = document.querySelector('.reel-video');
+const reelModal    = document.getElementById('reel-modal');
+const reelOpenBtn  = document.getElementById('reel-open');
+const reelCloseBtn = document.getElementById('reel-modal-close');
 
-function playReelVideo() {
+function openReelModal() {
+  reelModal.classList.add('is-open');
+  reelVideo.currentTime = 0;
   reelVideo.muted = false;
   reelVideo.play().catch(() => {
     reelVideo.muted = true;
     reelVideo.play();
   });
-  reelPlayBtn.classList.add('is-hidden');
 }
 
-function stopReelVideo() {
+function closeReelModal() {
+  reelModal.classList.remove('is-open');
   reelVideo.pause();
   reelVideo.muted = true;
-  reelVideo.load(); // recarrega o elemento para a capa (poster) voltar a aparecer
-  reelPlayBtn.classList.remove('is-hidden');
 }
 
-reelPlayBtn.addEventListener('click', playReelVideo);
+reelOpenBtn.addEventListener('click', openReelModal);
+reelCloseBtn.addEventListener('click', closeReelModal);
 reelVideo.addEventListener('click', () => {
-  if (!reelVideo.paused) {
+  if (reelVideo.paused) {
+    reelVideo.play();
+  } else {
     reelVideo.pause();
-    reelPlayBtn.classList.remove('is-hidden');
   }
 });
 
-// ── Overlay de contato ────────────────────────────────────
-const overlay       = document.getElementById('contact-overlay');
-const overlayLinks  = document.querySelectorAll('.overlay-link');
-const overlayCloseIcon = document.querySelector('.overlay-close img');
-let overlayAnimating = false;
-
-function openOverlay() {
-  if (overlayAnimating) return;
-  overlayAnimating = true;
-  overlay.classList.add('is-open');
-  const h = overlay.offsetHeight;
-  gsap.set(overlayLinks, { opacity: 0, y: 30 });
-  gsap.set(overlay, { y: -h });
-  gsap.set(overlayCloseIcon, { rotate: 0 });
-  gsap.to(overlay, { y: 0, duration: 0.6, ease: 'power3.out' });
-  gsap.to(overlayCloseIcon, { rotate: 45, duration: 0.6, ease: 'power3.out' });
-  gsap.to(overlayLinks, {
-    opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out', delay: 0.25,
-    onComplete: () => { overlayAnimating = false; },
-  });
-}
-
-function closeOverlay() {
-  if (overlayAnimating) return;
-  overlayAnimating = true;
-  const h = overlay.offsetHeight;
-  gsap.to(overlay, {
-    y: -h, duration: 0.5, ease: 'power3.in',
-    onComplete: () => {
-      overlay.classList.remove('is-open');
-      overlayAnimating = false;
-    },
-  });
-  gsap.to(overlayCloseIcon, { rotate: 0, duration: 0.4, ease: 'power3.in' });
-}
-
-document.getElementById('nav-open-overlay').addEventListener('click', openOverlay);
-document.getElementById('overlay-close').addEventListener('click', closeOverlay);
+// O overlay de contato vive em js/overlay.js (compartilhado com a página de projetos)
 
 const fp      = document.getElementById('fullpage');
 const sections = Array.from(document.querySelectorAll('.section'));
@@ -143,7 +110,7 @@ function goTo(index, dir = 1) {
   sections[prev].classList.remove('is-active');
   sections[index].classList.add('is-active');
 
-  if (sections[prev].id === 'reel') stopReelVideo();
+  if (sections[prev].id === 'reel' && reelModal.classList.contains('is-open')) closeReelModal();
 
   const tl = gsap.timeline({
     onComplete: () => { animating = false; }

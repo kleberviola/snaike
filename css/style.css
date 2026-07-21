@@ -58,6 +58,7 @@
   --color-red:    #FF1F00;
   --color-yellow: #FFFF00;
   --color-blue:   #0A0E5A;
+  --color-blue-bright: #0024AC;
   --color-dark:   #0D0D0D;
   --color-white:  #FFFFFF;
 
@@ -201,7 +202,7 @@ button {
   font-size: clamp(2.5rem, 6.67vw, 6rem);
   line-height: 1.05;
   text-transform: uppercase;
-  color: #0024AC;
+  color: var(--color-blue-bright);
 }
 
 /* =============================================
@@ -300,32 +301,113 @@ button {
 }
 
 /* =============================================
-   SECTION 02 · SOBRE (vídeo com play/pause)
+   SECTION 02 · REEL
    ============================================= */
-.reel-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: clamp(56px, 8vw, 96px);
-  height: clamp(56px, 8vw, 96px);
-  transition: opacity 0.25s, transform 0.25s;
+.reel-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.reel-play img {
+.reel-text {
+  position: absolute;
+  left: 1.7%;
+  top: 15%;
+  right: 2%;
+}
+
+.reel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 9.12vw, 11.6875rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--color-red);
+  white-space: nowrap;
+}
+
+.reel-desc {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin-top: 1em;
+  max-width: 34ch;
+}
+
+.reel-cta {
+  position: absolute;
+  right: 2%;
+  bottom: 10%;
+  width: clamp(160px, 16.2vw, 308px);
+}
+
+.reel-cta img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reel-cta:hover img {
+    opacity: 0.7;
+  }
+}
+
+.footer-credit {
+  justify-content: flex-end;
+}
+
+/* =============================================
+   MODAL DE VÍDEO (Reel)
+   ============================================= */
+.reel-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.reel-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reel-modal .reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.reel-modal-close {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  transform: rotate(45deg);
+  transition: opacity 0.2s;
+}
+
+.reel-modal-close img {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.reel-play:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-}
-
-.reel-play.is-hidden {
-  opacity: 0;
-  pointer-events: none;
+.reel-modal-close:hover {
+  opacity: 0.7;
 }
 
 /* =============================================
@@ -375,6 +457,15 @@ body.is-hero .nav-logo {
   white-space: nowrap;
 }
 
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(24px, 4vh, 48px);
+  transform: translateX(-50%);
+  width: clamp(100px, 11.5vw, 132px);
+  height: auto;
+}
+
 /* =============================================
    SECTION 03 · MANIFESTO
    ============================================= */
@@ -403,68 +494,34 @@ body.is-hero .nav-logo {
   white-space: nowrap;
 }
 
-.manifesto-left {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(0.9rem, 1.875vw, 2.5rem);
-  text-transform: uppercase;
-  color: var(--color-red);
-  line-height: 1;
-}
-
-.ml-text1 {
-  display: block;
-  padding-left: 0.5em;
-  margin-bottom: 0.35em;
-}
-
-.ml-row2 {
+.manifesto-note {
   display: flex;
-  align-items: center;
-  gap: 0.5em;
+  align-items: flex-start;
+  gap: 0.6em;
 }
 
-.ml-dash {
+.mn-dash {
   display: block;
   width: 2.86vw;
   min-width: 20px;
   height: 3px;
   background: var(--color-red);
   flex-shrink: 0;
+  margin-top: 0.9em;
+}
+
+.mn-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
+  text-transform: uppercase;
+  color: var(--color-red);
+  max-width: 34ch;
 }
 
 .bg-mobile {
   display: none;
-}
-
-.manifesto-left-mobile {
-  display: none;
-}
-
-.manifesto-right {
-  position: absolute;
-  right: 2%;
-  bottom: 18%;
-  text-align: right;
-}
-
-.manifesto-caption {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(0.9rem, 1.875vw, 2.5rem);
-  text-transform: uppercase;
-  color: var(--color-red);
-  line-height: 1.1;
-  margin-bottom: 0.7em;
-}
-
-.manifesto-list {
-  list-style: none;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: clamp(0.75rem, 1.25vw, 1.75rem);
-  color: var(--color-red);
-  line-height: 1.45;
 }
 
 /* =============================================
@@ -479,7 +536,7 @@ body.is-hero .nav-logo {
 .ais-intro {
   position: absolute;
   left: 1.6%;
-  top: 22.1%;
+  top: 12%;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(0.9rem, 1.875vw, 2.5rem);
@@ -493,10 +550,20 @@ body.is-hero .nav-logo {
   padding-left: 0.8em;
 }
 
-.ais-list {
+.ais-side {
   position: absolute;
   right: 2%;
-  top: 34.8%;
+  /* Ancorada acima do "PROJETOS": sobe junto com o título (que escala por vw),
+     garantindo respiro constante e sem sobreposição em qualquer proporção de tela */
+  top: auto;
+  bottom: calc(86px + clamp(5rem, 17.27vw, 22rem));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1em;
+}
+
+.ais-list {
   text-align: right;
   list-style: none;
   font-family: var(--font-body);
@@ -506,10 +573,34 @@ body.is-hero .nav-logo {
   line-height: 1.45;
 }
 
+.ais-list li {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6em;
+}
+
+.ais-cta {
+  display: block;
+  width: clamp(140px, 12vw, 230px);
+}
+
+.ais-cta img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ais-cta:hover img {
+    opacity: 0.7;
+  }
+}
+
 .ais-title {
   position: absolute;
   left: 1.7%;
-  bottom: 1.5%;
+  bottom: 62px;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(5rem, 17.27vw, 22rem);
@@ -539,7 +630,8 @@ body.is-hero .nav-logo {
 .cta-line {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(3.5rem, 9.72vw, 12rem);
+  /* 6.23vw faz a linha mais longa ("Para criar e performar,") ir até a borda da tela */
+  font-size: clamp(2.5rem, 6.23vw, 12rem);
   line-height: 0.92;
   text-transform: uppercase;
   color: var(--color-red);
@@ -547,23 +639,23 @@ body.is-hero .nav-logo {
 }
 
 .cta-invite {
-  display: inline-block;
+  display: block;
   align-self: flex-start;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 48px;
-  text-transform: uppercase;
-  text-align: left;
-  color: var(--color-yellow);
-  margin-top: 0.3em;
-  white-space: nowrap;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  width: clamp(210px, 21.25vw, 404px);
+  margin-top: 0.5em;
+}
+
+.cta-invite img {
+  width: 100%;
+  height: auto;
+  display: block;
   transition: opacity 0.2s;
 }
 
-.cta-invite:hover {
-  opacity: 0.7;
+@media (hover: hover) and (pointer: fine) {
+  .cta-invite:hover img {
+    opacity: 0.7;
+  }
 }
 
 /* =============================================
@@ -593,6 +685,39 @@ body.is-hero .nav-logo {
     right: 24px;
   }
 
+  /* Reel */
+  .reel-content {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 24px 0;
+  }
+
+  .reel-text {
+    position: static;
+  }
+
+  .reel-title {
+    font-size: 48px;
+    white-space: normal;
+  }
+
+  .reel-desc {
+    font-size: 18px;
+    line-height: 22px;
+    max-width: 32ch;
+  }
+
+  .reel-cta {
+    position: static;
+    width: 140px;
+    margin-top: 24px;
+  }
+
+  .reel-modal-close {
+    top: 24px;
+    right: 24px;
+  }
+
   /* Manifesto */
   .manifesto-block {
     left: 24px;
@@ -604,21 +729,10 @@ body.is-hero .nav-logo {
     white-space: normal;
   }
 
-  .manifesto-left {
-    font-size: 24px;
-  }
-
-  .manifesto-right {
-    right: 24px;
-    bottom: 40px;
-  }
-
-  .manifesto-caption {
-    font-size: 24px;
-  }
-
-  .manifesto-list {
-    font-size: 16px;
+  .mn-text {
+    font-size: 18px;
+    line-height: 22px;
+    max-width: none;
   }
 
   /* AI Studio */
@@ -628,12 +742,19 @@ body.is-hero .nav-logo {
     font-size: 24px;
   }
 
-
-  .ais-list {
+  .ais-side {
     right: 24px;
     top: auto;
-    bottom: 14.6%;
+    bottom: 20%;
+    gap: 1em;
+  }
+
+  .ais-list {
     font-size: 16px;
+  }
+
+  .ais-cta {
+    width: 130px;
   }
 
   .ais-title {
@@ -647,12 +768,12 @@ body.is-hero .nav-logo {
   }
 
   .cta-line {
-    font-size: 48px;
+    font-size: 40px;
     white-space: normal;
   }
 
   .cta-invite {
-    font-size: 24px;
+    width: 200px;
   }
 
   /* Manifesto: troca a imagem de fundo pela versão enquadrada para mobile */
@@ -671,23 +792,4 @@ body.is-hero .nav-logo {
     white-space: nowrap;
   }
 
-  .manifesto-left-desktop {
-    display: none;
-  }
-
-  .manifesto-left-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
-  }
-
-  .ml-row1-mobile {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-  }
-
-  .ml-text2-mobile {
-    padding-left: 1.9em;
-  }
 }

@@ -32,9 +32,9 @@
     "url": "https://kleberviola.github.io/snaike/",
     "logo": "https://kleberviola.github.io/snaike/imagens/logo_snaike_red.svg",
     "description": "Snaike é a iniciativa da Hearting + Rooker que une direção criativa humana e execução por IA para criar imagens, vídeos e ativos digitais para marcas.",
-    "email": "hey@snaikestudio.com",
+    "email": "hello@snaikestudio.com",
     "sameAs": [
-      "https://instagram.com/snaikestudio"
+      "https://www.instagram.com/studiosnaike/"
     ]
   }
   </script>
@@ -57,9 +57,21 @@
       <img src="imagens/mais_icon_azul.svg" alt="">
     </button>
     <div class="overlay-links">
-      <a href="mailto:hey@snaikestudio.com" class="overlay-link">Email</a>
-      <a href="https://instagram.com/snaikestudio" target="_blank" rel="noopener" class="overlay-link">Instagram</a>
+      <a href="index.html" class="overlay-link">Home</a>
+      <a href="projetos.html" class="overlay-link">Projetos</a>
+      <a href="mailto:hello@snaikestudio.com" class="overlay-link">Contato</a>
+      <a href="https://www.instagram.com/studiosnaike/" target="_blank" rel="noopener" class="overlay-link">Instagram</a>
     </div>
+  </div>
+
+  <!-- Overlay do vídeo Reel -->
+  <div class="reel-modal" id="reel-modal">
+    <button class="reel-modal-close" id="reel-modal-close" aria-label="Fechar vídeo">
+      <img src="imagens/mais_icon.svg" alt="">
+    </button>
+    <video class="reel-video" playsinline loop>
+      <source src="videos/snaike_reel_baixa.mp4?v=2" type="video/mp4">
+    </video>
   </div>
 
   <!-- Container fullpage com scroll-snap -->
@@ -78,18 +90,27 @@
           <img src="imagens/logo_snaike_red.svg" alt="Snaike" class="hero-wordmark">
           <p class="hero-tagline">Natural Born Creatives</p>
         </div>
+        <img src="imagens/scroll.svg" alt="" class="hero-scroll" aria-hidden="true">
       </div>
     </section>
 
     <!-- 02 · REEL -->
     <section class="section" id="reel" data-section="02">
       <div class="section-bg">
-        <video class="reel-video" playsinline loop poster="imagens/snaike_sobre.jpg">
-          <source src="videos/snaike_reel_baixa.mp4?v=2" type="video/mp4">
-        </video>
-        <button class="reel-play" aria-label="Reproduzir vídeo">
-          <img src="imagens/play.svg" alt="">
+        <img src="imagens/snaike_sobre.jpg" alt="Torre de monitores CRT exibindo still de vídeo institucional da Snaike" class="bg-desktop">
+        <img src="imagens/snaike_sobre_mobile.jpg" alt="Torre de monitores CRT exibindo still de vídeo institucional da Snaike" class="bg-mobile">
+      </div>
+      <div class="section-content reel-content">
+        <div class="reel-text">
+          <h2 class="reel-title">Somos um tech<br>studio de design</h2>
+          <p class="reel-desc">Criamos imagens para campanhas, avatares, ensaios de modelos, imagem de produtos, animações, mockups, sites, landing pages e apresentações.</p>
+        </div>
+        <button class="reel-cta" id="reel-open" aria-label="Assistir Reels">
+          <img src="imagens/assistir_reels.svg" alt="">
         </button>
+        <div class="section-footer footer-credit">
+          <span>Esse site foi criado por humanos e executados por IA</span>
+        </div>
       </div>
     </section>
 
@@ -103,31 +124,13 @@
         <div class="manifesto-block">
           <h2 class="manifesto-line">Humanos criam</h2>
           <h2 class="manifesto-line">IA executa</h2>
-          <div class="manifesto-left manifesto-left-desktop">
-            <span class="ml-text1">A IA por IA</span>
-            <div class="ml-row2">
-              <span class="ml-dash"></span>
-              <span>Não resolve</span>
-            </div>
-          </div>
-          <div class="manifesto-left manifesto-left-mobile">
-            <div class="ml-row1-mobile">
-              <span class="ml-dash"></span>
-              <span>A ia por ia</span>
-            </div>
-            <span class="ml-text2-mobile">Não resolve</span>
+          <div class="manifesto-note">
+            <span class="mn-dash" aria-hidden="true"></span>
+            <p class="mn-text">Tecnologia é ferramenta. O que garante nossas entregas é sentimento, intuição, estratégia, experiência e repertório de profissionais experientes e criativos por natureza.</p>
           </div>
         </div>
-        <div class="manifesto-right">
-          <h3 class="manifesto-caption">Para performar<br>é preciso:</h3>
-          <ul class="manifesto-list">
-            <li>_Criatividade</li>
-            <li>_Repertório</li>
-            <li>_Referências</li>
-            <li>_Experiência</li>
-            <li>_Sentimento</li>
-            <li>_Intuição</li>
-          </ul>
+        <div class="section-footer footer-credit">
+          <span>Esse site foi criado por humanos e executados por IA</span>
         </div>
       </div>
     </section>
@@ -141,14 +144,23 @@
       </div>
       <div class="section-content ai-studio-content">
         <p class="ais-intro"><span>Produção</span><br><span class="ais-indent">de imagem e</span><br><span>ativos digitais</span><br><span class="ais-indent">com IA.</span></p>
-        <ul class="ais-list">
-          <li>_Ensaios fotográficos digitais</li>
-          <li>_Imagens de produto</li>
-          <li>_Landing pages</li>
-          <li>_Sites</li>
-          <li>_Apresentações</li>
-        </ul>
-        <h2 class="ais-title">AI Studio</h2>
+        <div class="ais-side">
+          <ul class="ais-list">
+            <li>_Imagens para campanhas</li>
+            <li><span>_Avatares</span><span>_Ensaios de modelos</span></li>
+            <li>_Imagem de produtos</li>
+            <li><span>_Animações</span><span>_Mockups</span></li>
+            <li><span>_Sites</span><span>_Landing pages</span></li>
+            <li>_Apresentações</li>
+          </ul>
+          <a href="projetos.html" class="ais-cta" aria-label="Conhecer projetos">
+            <img src="imagens/conhecer_projetos.svg" alt="">
+          </a>
+        </div>
+        <h2 class="ais-title">Projetos</h2>
+        <div class="section-footer footer-credit">
+          <span>Esse site foi criado por humanos e executados por IA</span>
+        </div>
       </div>
     </section>
 
@@ -159,9 +171,14 @@
       </div>
       <div class="section-content contato-content">
         <div class="cta-block">
-          <h2 class="cta-line">Pronto</h2>
-          <h2 class="cta-line">Para atacar?</h2>
-          <a href="mailto:hey@snaikestudio.com" class="cta-invite">Entre em contato</a>
+          <h2 class="cta-line">Para criar e performar,</h2>
+          <h2 class="cta-line">dê o bote!</h2>
+          <a href="mailto:hello@snaikestudio.com" class="cta-invite" aria-label="Entre em contato">
+            <img src="imagens/contato.svg" alt="">
+          </a>
+        </div>
+        <div class="section-footer footer-credit">
+          <span>Esse site foi criado por humanos e executados por IA</span>
         </div>
       </div>
     </section>
@@ -178,6 +195,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="js/overlay.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
